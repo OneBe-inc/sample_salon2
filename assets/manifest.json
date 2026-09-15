@@ -1,0 +1,23 @@
+[
+  {
+    "file": "interior.png",
+    "sha256": "e73f4067b6c71246429b5e3857f1fa84bd83b1f9f941793398e19de71bca9424",
+    "origin": "OpenAI built-in image generation",
+    "reference_images": 0,
+    "created": "2026-09-16"
+  },
+  {
+    "file": "care.png",
+    "sha256": "1d73bf5acf35a287a41db974df4d4d2f031bbfaac912a514ed90dbff14540a87",
+    "origin": "OpenAI built-in image generation",
+    "reference_images": 0,
+    "created": "2026-09-16"
+  },
+  {
+    "file": "hair.png",
+    "sha256": "2cd61e503bfc730f869570171576f58b78843f25a195df8d288947e18ef2b219",
+    "origin": "OpenAI built-in image generation",
+    "reference_images": 0,
+    "created": "2026-09-16"
+  }
+]
