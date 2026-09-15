@@ -27,6 +27,16 @@ npm start
 
 `ASSET_PROVENANCE.md` に生成プロンプトと確認記録を保存しています。`assets/manifest.json` のハッシュで公開画像と生成画像の一致を確認できます。
 
+## OGP・SNSカード画像
+
+全7ページに、ユーザーがOGP用途に指定した `OneBe定額Webサービス.png` を無加工で使用しています。ページ内のAI生成写真3点とは別のユーザー提供素材です。
+
+- 公開画像: https://onebe-inc.github.io/sample_salon2/assets/onebe-web-service-ogp.png
+- PNG / 1672×941ピクセル。再圧縮・リサイズ・トリミング・文字や料金の編集はしていません。
+- `assets/ogp-provenance.json` に出所、実寸、容量、元画像と一致するSHA-256を記録。
+- `social.mjs` で各ページのOpen GraphとXカードを設定。`npm run check` に全7ページのメタデータ確認を含めています。
+- 公開後の確認: `node verify-ogp.mjs --live`。SNSサービス内のキャッシュや表示時のトリミングまで保証するものではありません。
+
 ## 権利面について
 
 この版では旧サイト由来の素材を流用せず、独自に制作した表現へ置き換えました。生成画像についても、元画像の加工・模倣を指示していません。この記録は法的な無侵害保証ではありません。
