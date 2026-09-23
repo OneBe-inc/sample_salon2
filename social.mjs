@@ -1,16 +1,16 @@
 // Site-wide social card uses the unmodified image expressly supplied by the user.
 export const siteUrl='https://onebe-inc.github.io/sample_salon2/';
 export const socialImage={
-  file:'onebe-web-service-ogp.png',
-  url:siteUrl+'assets/onebe-web-service-ogp.png',
-  type:'image/png',width:1672,height:941,
+  file:'onebe-ogp-20260924.jpg',
+  url:siteUrl+'assets/onebe-ogp-20260924.jpg',
+  type:'image/jpeg',width:1672,height:941,
   alt:'One Beの定額Webサービスと、限定30社のモニター特別価格を案内する広告画像。'
 };
 const esc=value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 export function socialMetadata(title,description,page){
   const properties={
     'og:type':['story','announcement','recruit'].includes(page)?'article':'website',
-    'og:locale':'ja_JP','og:site_name':'美容室 サンプル',
+    'og:locale':'ja_JP','og:site_name':'OneBe salon',
     'og:title':title,'og:description':description,
     'og:url':siteUrl+(page==='index'?'':page+'.html'),
     'og:image':socialImage.url,'og:image:secure_url':socialImage.url,

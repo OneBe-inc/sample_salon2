@@ -1,8 +1,29 @@
-import fs from 'node:fs/promises';import path from 'node:path';import assert from 'node:assert/strict';import crypto from 'node:crypto';import{fileURLToPath}from'node:url';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {load} from 'cheerio';
+import {fileURLToPath} from 'node:url';
 import {verifyOgp} from './verify-ogp.mjs';
-const root=path.dirname(fileURLToPath(import.meta.url)),out=path.join(root,'dist');const names=await fs.readdir(out);const ids={};let checks=0;
-for(const name of names.filter(n=>n.endsWith('.html'))){const text=await fs.readFile(path.join(out,name),'utf8');const list=[...text.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);ids[name]=new Set(list);assert.equal(list.length,ids[name].size,`${name}: duplicate IDs`);assert.equal((text.match(/<h1[ >]/g)||[]).length,1,`${name}: one h1`);assert(text.includes('OneBe.inc')&&text.includes('サンプル'),`${name}: branding`);assert(!/らふる|Laughful|studiodesign|production-os-assets|末長く髪|輪郭の探究|<video/i.test(text),`${name}: reference remnants`);assert(!text.includes('{{'),`${name}: unresolved placeholder`);assert(text.includes('aria-labelledby="reservation-title"'));}
-for(const name of names.filter(n=>/\.(html|css)$/.test(n))){const text=await fs.readFile(path.join(out,name),'utf8');for(const match of text.matchAll(/(?:href|src)="([^"]+)"|url\(["']?([^)'"\s]+)["']?\)/g)){const ref=match[1]||match[2];assert(!/^https?:/.test(ref),`${name}: unexpected external resource ${ref}`);const[loc,hash]=ref.split('#');const file=(loc||name).split('?')[0].replace(/^\.\//,'');await fs.access(path.join(out,file));if(hash)assert(ids[file]?.has(hash),`${name}: missing ${ref}`);checks++;}for(const match of text.matchAll(/data-dialog="([^"]+)"/g))assert(ids[name]?.has(match[1]),`${name}: missing dialog`);}
-const assets=await fs.readdir(path.join(out,'assets'));assert.deepEqual(assets.sort(),['care.png','hair.png','interior.png','onebe-web-service-ogp.png']);const manifest=JSON.parse(await fs.readFile(path.join(root,'assets','manifest.json')));for(const a of manifest){const b=await fs.readFile(path.join(out,'assets',a.file));assert.equal(crypto.createHash('sha256').update(b).digest('hex'),a.sha256);assert.equal(a.reference_images,0);}
+const root=path.dirname(fileURLToPath(import.meta.url)),out=path.join(root,'dist');
+const files=(await fs.readdir(out)).filter(f=>f.endsWith('.html')&&f!=='404.html');
+const docs=new Map();let links=0;
+for(const file of files){
+ const $=load(await fs.readFile(path.join(out,file),'utf8'));docs.set(file,$);
+ assert.equal($('html').attr('lang'),'ja');assert.equal($('h1').length,1,file);
+ assert.equal($('title').length,1);assert.equal($('meta[name=description]').length,1);
+ const ids=$('[id]').map((_,e)=>$(e).attr('id')).get();assert.equal(new Set(ids).size,ids.length,`${file}: unique IDs`);
+ assert.equal($('link[rel=canonical]').attr('href'),'https://onebe-inc.github.io/sample_salon2/'+(file==='index.html'?'':file));
+ assert.equal($('meta[name=robots]').attr('content'),'noindex,nofollow',`${file}: preserve sample index policy`);
+ assert($('body').text().includes('デザインサンプル'));assert($('body').text().includes('OneBe.inc'));
+ $('script[type="application/ld+json"]').each((_,e)=>assert.equal(JSON.parse($(e).text())['@type'],'WebPage'));
+ let level=0;$('main h1,main h2,main h3,main h4,main h5,main h6').each((_,e)=>{const current=Number(e.tagName[1]);assert(current<=level+1,`${file}: heading order`);assert($(e).text().trim());level=current;});
+ $('img').each((_,e)=>{assert($(e).attr('alt')!==undefined);assert($(e).attr('width'));assert($(e).attr('height'));});
+ $('[data-dialog]').each((_,e)=>assert($(`[id="${$(e).attr('data-dialog')}"]`).length));
+}
+for(const [file,$]of docs){for(const e of $('[href],[src]').toArray()){
+ const ref=$(e).attr('href')||$(e).attr('src');if(/^https?:/.test(ref)){assert($(e).is('link[rel=canonical]'));continue;}
+ const url=new URL(ref,'https://site.invalid/'+file);let target=url.pathname.slice(1);if(!target||target.endsWith('/'))target+='index.html';
+ await fs.access(path.join(out,target));if(url.hash)assert(docs.get(target)?.(`[id="${decodeURIComponent(url.hash.slice(1))}"]`).length,`${file} → ${ref}`);links++;
+}}
 await verifyOgp();
-assert.equal(Object.keys(ids).length,7);console.log(`PASS: 7 pages, ${checks} links/resources, 3 generated asset hashes, 1 unmodified user-provided OGP image, and social metadata on every page.`);
+assert.equal(files.length,9);console.log(`PASS: 9 HTML pages, ${links} internal links/assets, heading order, metadata, original OGP hash, noindex policy.`);

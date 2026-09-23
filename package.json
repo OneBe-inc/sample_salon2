@@ -1,1 +1,1 @@
-{"name":"sample-salon2","version":"2.0.0","private":true,"type":"module","scripts":{"build":"node build.mjs","check":"node validate.mjs","start":"node server.mjs"},"engines":{"node":">=20"}}
+{"name":"sample-salon2","version":"2.0.0","private":true,"type":"module","scripts":{"build":"node build.mjs","check":"node validate.mjs","start":"node server.mjs"},"engines":{"node":">=20"},"devDependencies":{"cheerio":"^1.2.0"}}

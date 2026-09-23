@@ -1,13 +1,12 @@
 {
-  "file": "onebe-web-service-ogp.png",
-  "source_file": "OneBe定額Webサービス.png",
-  "origin": "User-provided image explicitly designated for OGP and social cards",
-  "received": "2026-09-16",
+  "file": "onebe-ogp-20260924.jpg",
+  "source_file": "812281415_18124325926863880_2965265580261649412_n.jpg",
+  "origin": "User-provided image, explicitly confirmed for OGP on 2026-09-24",
   "transformation": "None; byte-for-byte copy",
-  "mime_type": "image/png",
+  "mime_type": "image/jpeg",
   "width": 1672,
   "height": 941,
-  "bytes": 1740678,
-  "sha256": "c4dad3c718fdb14e7a01c963fe443fcc7a3f82a837c01b931f142c2d01a50e6d",
-  "public_url": "https://onebe-inc.github.io/sample_salon2/assets/onebe-web-service-ogp.png"
+  "bytes": 151222,
+  "sha256": "487ca6a426f5f53ff182249f5b43ed9c5a72799098ce2f6b8bd955cf0df2d08a",
+  "public_url": "https://onebe-inc.github.io/sample_salon2/assets/onebe-ogp-20260924.jpg"
 }
