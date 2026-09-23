@@ -1,0 +1,56 @@
+/* The studio contact stays separate from the salon's sample reservation flow. */
+.web-consultation {
+  position: fixed;
+  z-index: 30;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 19px;
+  width: 58px;
+  min-height: 244px;
+  padding: 24px 12px;
+  border: 1px solid #f5f2ec55;
+  border-right: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font: 400 13px/1.6 var(--sans);
+  letter-spacing: .08em;
+  box-shadow: -4px 3px 18px #17233814;
+  transition: background .25s ease, opacity .35s ease;
+}
+.web-consultation-label {
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+}
+.web-consultation svg { width: 16px; height: 16px; flex: none; }
+.web-consultation:focus-visible { outline: 2px solid #b69a6b; outline-offset: -5px; }
+.web-consultation:hover { background: #2d3d55; opacity: 1; }
+.js:not(.is-ready) .web-consultation,
+.dialog-open .web-consultation { visibility: hidden; opacity: 0; pointer-events: none; }
+@media (max-width: 900px), (max-height: 500px) {
+  .web-consultation {
+    top: auto;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    transform: none;
+    flex-direction: row;
+    gap: 18px;
+    width: auto;
+    min-width: 212px;
+    min-height: 52px;
+    padding: 15px 20px;
+    border-right: 1px solid #f5f2ec55;
+    font-size: 12px;
+    letter-spacing: .045em;
+    box-shadow: 0 4px 20px #17233826;
+  }
+  .web-consultation-label { writing-mode: horizontal-tb; }
+  .site-footer { padding-bottom: calc(98px + env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .web-consultation { transition: none; }
+}
