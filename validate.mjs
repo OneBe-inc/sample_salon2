@@ -26,4 +26,4 @@ for(const [file,$]of docs){for(const e of $('[href],[src]').toArray()){
  await fs.access(path.join(out,target));if(url.hash)assert(docs.get(target)?.(`[id="${decodeURIComponent(url.hash.slice(1))}"]`).length,`${file} → ${ref}`);links++;
 }}
 await verifyOgp();
-assert.equal(files.length,9);console.log(`PASS: 9 HTML pages, ${links} internal links/assets, heading order, metadata, original OGP hash, noindex policy.`);
+assert.equal(files.length,9);console.log(`PASS: 9 HTML pages, ${links} internal links/assets, heading order, metadata, screenshot OGP hash, noindex policy.`);

@@ -26,14 +26,17 @@ export async function verifyOgp({live=false,sourceFile}={}){
   for(const [k,v]of Object.entries(expected))assert.equal(meta.get(k),v,`${file}: ${k}`);
   assert.equal(meta.get('og:title'),$('title').text());assert.equal(meta.get('twitter:title'),$('title').text());
   assert.equal(meta.get('og:description'),meta.get('description'));assert.equal(meta.get('twitter:description'),meta.get('description'));assert(meta.get('og:image:alt'));
+  assert.equal(meta.get('robots'),'noindex,nofollow',`${file}: noindex policy`);
   pages.push({url,status:'PASS'});
  }
  assert.equal(pages.length,9);
- return {checkedAt:new Date().toISOString(),scope:live?'public GitHub Pages':'local build',image:{...p,matchesUserOriginal:true},pages,result:'PASS'};
+ const notFoundHtml=live?await(await get(base+'404.html')).text():await fs.readFile(path.join(root,'dist/404.html'),'utf8');
+ assert.equal(load(notFoundHtml)('meta[name=robots]').attr('content'),'noindex','404 noindex policy');
+ return {checkedAt:new Date().toISOString(),scope:live?'public GitHub Pages':'local build',image:{...p,matchesRecordedScreenshot:true},pages,noindexPages:pages.length+1,result:'PASS'};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const option=name=>{const i=process.argv.indexOf(name);return i<0?undefined:process.argv[i+1];};
  const report=await verifyOgp({live:process.argv.includes('--live'),sourceFile:option('--source')});
  if(option('--report'))await fs.writeFile(option('--report'),JSON.stringify(report,null,2));
- console.log(`PASS: ${report.pages.length} pages, OGP ${report.image.width}×${report.image.height}, unchanged original SHA-256; ${report.scope}`);
+ console.log(`PASS: ${report.pages.length} pages, OGP ${report.image.width}×${report.image.height}, screenshot SHA-256; noindex on ${report.noindexPages} pages; ${report.scope}`);
 }

@@ -1,12 +1,12 @@
 {
-  "file": "onebe-ogp-20260924.jpg",
-  "source_file": "812281415_18124325926863880_2965265580261649412_n.jpg",
-  "origin": "User-provided image, explicitly confirmed for OGP on 2026-09-24",
-  "transformation": "None; byte-for-byte copy",
+  "file": "onebe-salon-fv-ogp-20260924.jpg",
+  "source_file": "dist/index.html (typography revision afc5ddc)",
+  "origin": "Browser screenshot of the current OneBe salon first view, requested by the user on 2026-09-24",
+  "transformation": "Rendered at 1200x630 with hero height 630px, copy top padding 175px, caption bottom 34px, image scale 1.075; animations, loader and motion/scroll controls hidden for capture only. Screenshot bytes saved without further image editing.",
   "mime_type": "image/jpeg",
-  "width": 1672,
-  "height": 941,
-  "bytes": 151222,
-  "sha256": "487ca6a426f5f53ff182249f5b43ed9c5a72799098ce2f6b8bd955cf0df2d08a",
-  "public_url": "https://onebe-inc.github.io/sample_salon2/assets/onebe-ogp-20260924.jpg"
+  "width": 1200,
+  "height": 630,
+  "bytes": 94208,
+  "sha256": "68a03b0b1ad32fc180d03bf956ab3fd84ffd249175cfacdb21690c52dccef792",
+  "public_url": "https://onebe-inc.github.io/sample_salon2/assets/onebe-salon-fv-ogp-20260924.jpg"
 }

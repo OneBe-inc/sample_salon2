@@ -1,10 +1,10 @@
-// Site-wide social card uses the unmodified image expressly supplied by the user.
+// Site-wide social card captures the current first view at the requested OGP size.
 export const siteUrl='https://onebe-inc.github.io/sample_salon2/';
 export const socialImage={
-  file:'onebe-ogp-20260924.jpg',
-  url:siteUrl+'assets/onebe-ogp-20260924.jpg',
-  type:'image/jpeg',width:1672,height:941,
-  alt:'One Beの定額Webサービスと、限定30社のモニター特別価格を案内する広告画像。'
+  file:'onebe-salon-fv-ogp-20260924.jpg',
+  url:siteUrl+'assets/onebe-salon-fv-ogp-20260924.jpg',
+  type:'image/jpeg',width:1200,height:630,
+  alt:'OneBe salonのファーストビュー。「髪が整うと、わたしが整う。」の見出しと、自然光に包まれた店内。'
 };
 const esc=value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 export function socialMetadata(title,description,page){
