@@ -25,9 +25,11 @@ npm start
 
 ローカルURL: http://127.0.0.1:4175/
 
-`build.mjs` がHTMLを生成し、`content.mjs` が下層ページの文章と料金、`social.mjs` がOGPを管理します。`styles.css` と `app.js` で表示・動作を変更します。公開対象は `dist/` です。
+`build.mjs` がHTMLを生成し、`content.mjs` が下層ページの文章と料金、`social.mjs` がOGPを管理します。`styles.css` がレイアウト、`typography.css` が書体と文字組み、`app.js` が動作です。公開対象は `dist/` です。
 
-日本語フォントはNoto Serif JPの使用文字サブセットを同梱しています。文章追加時はサブセットの再生成か、OSの明朝体フォールバックの表示確認が必要です。ライセンスは `assets/NotoSerifJP-OFL.txt`。
+和文見出しには「しっぽり明朝 Regular」、説明文・操作ラベルには「Noto Sans JP Regular」、ロゴ・欧文・価格には「EB Garamond Regular」を採用。すべて自サイト配信です。選定意図は `TYPOGRAPHY_20260924.md`、同梱ライセンスは `assets/*-OFL.txt`。以前のフォントファイルは旧URL互換のため残していますが、表示には使用しません。
+
+文章追加時は `npm run build` → `node prepare-fonts.mjs` → `npm run build` で使用文字のサブセットを再生成します。`prepare-fonts.mjs` の実行時のみGoogle Fontsへの接続が必要です。
 
 `npm run check` はHTMLパーサーで見出し・リンク・メタ情報・画像・OGPの元画像ハッシュを検証します。公開後は以下で全ページのHTML一致とOGPを検証できます。
 

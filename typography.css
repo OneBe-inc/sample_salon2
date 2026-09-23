@@ -1,0 +1,144 @@
+/* A quiet editorial hierarchy: old-style Japanese headlines, readable body,
+   and a separate Latin face. Each is a real Regular master, never faux-bold. */
+@font-face {
+  font-family: 'Shippori Mincho';
+  src: url('./assets/shippori-mincho-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('./assets/eb-garamond-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Salon Sans';
+  src: url('./assets/noto-sans-jp-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --serif: 'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+  --latin: 'EB Garamond', Georgia, serif;
+  --sans: 'Salon Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+}
+body { font-family: var(--sans); font-synthesis: none; font-kerning: normal; }
+h1, h2, .hero-lead, .hero-caption, .concept-visual-copy > p:first-child,
+.menu-visual-copy {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-feature-settings: 'palt' 1;
+  line-break: strict;
+}
+.hero h1 {
+  font-size: clamp(27px, 2.52vw, 41px);
+  line-height: 1.78;
+  letter-spacing: .065em;
+}
+.hero-lead { font-size: clamp(12px, 1.04vw, 16px); line-height: 2; letter-spacing: .045em; }
+.hero-caption { font-size: clamp(14px, 1.18vw, 19px); letter-spacing: .065em; line-height: 1.9; }
+.concept-copy h2, .menu-copy h2, .space-copy h2 {
+  font-size: clamp(29px, 2.82vw, 44px);
+  line-height: 1.6;
+  letter-spacing: .045em;
+}
+.concept-copy > p:not(.eyebrow), .menu-copy > p:not(.eyebrow), .space-copy > p:not(.eyebrow) {
+  font-size: clamp(12px, .91vw, 14px);
+  line-height: 2.15;
+  letter-spacing: .025em;
+  color: #514f48;
+  font-feature-settings: normal;
+}
+.brand, .visual-brand, .loading-brand, .footer-brand {
+  font-family: var(--latin);
+  font-weight: 400;
+  font-feature-settings: 'kern' 1;
+  letter-spacing: -.025em;
+  line-height: 1;
+}
+.brand { font-size: 29px; }
+.brand span { font-size: 1.2em; }
+.home-header > .brand { padding-top: 28px; }
+.visual-brand { font-size: clamp(31px, 3.4vw, 53px); }
+.loading-brand { font-size: 36px; }
+.loading-brand > span { font-size: 1.2em; }
+.footer-brand { font-size: 23px; }
+.header-reserve { font-family: var(--latin); font-size: 17px; font-weight: 400; letter-spacing: .03em; }
+.eyebrow { font-family: var(--sans); font-size: 10px; letter-spacing: .15em; }
+.reservation-copy .eyebrow { font-family: var(--sans); font-size: 10px; letter-spacing: .15em; }
+.micro, .hero-micro, .concept-visual-copy .micro, .concept-detail > .micro,
+.menu-visual > .micro, .space-sign > .micro, .reservation-micro {
+  font-family: var(--sans);
+  font-size: 8px;
+  letter-spacing: .22em;
+  line-height: 2.25;
+}
+.hero-micro { margin-top: 29px; }
+.scroll-cue span, .gallery-link { font-family: var(--sans); font-size: 9px; letter-spacing: .18em; }
+.concept-visual-copy { font-size: clamp(12px, 1.04vw, 16px); line-height: 1.95; letter-spacing: .045em; }
+.text-link { font-family: var(--sans); font-size: 11px; letter-spacing: .045em; }
+.text-link > span { text-decoration-color: #858c92; text-underline-offset: 6px; }
+.menu-preview dt a { font-family: var(--sans); font-size: 10px; letter-spacing: .13em; }
+.menu-preview dt small { font-family: var(--sans); font-size: 10px; letter-spacing: .025em; color: #666158; }
+.menu-preview dd { font-family: var(--latin); font-size: 17px; line-height: 1; letter-spacing: .01em; font-variant-numeric: lining-nums tabular-nums; }
+.menu-visual-copy { font-size: clamp(13px, 1.08vw, 17px); line-height: 2; letter-spacing: .06em; }
+.reservation-copy h2 { font-size: clamp(26px, 2.38vw, 37px); line-height: 1.75; letter-spacing: .06em; }
+.reservation-action > p { font-family: var(--sans); font-size: 12px; letter-spacing: .025em; line-height: 2; }
+.outline-button { font-family: var(--sans); font-size: 12px; letter-spacing: .075em; }
+.loading-screen p { font-family: var(--sans); font-size: 8px; letter-spacing: .2em; }
+.page-title h1 { font-size: clamp(29px, 3vw, 44px); line-height: 1.65; letter-spacing: .045em; }
+.page-title > p:last-child { font-size: 14px; line-height: 2; letter-spacing: .025em; }
+.price-category h2 { font-family: var(--latin); font-size: 34px; letter-spacing: .015em; }
+.price-list h3 { font-family: var(--sans); font-size: 14px; }
+.price-list > div > span { font-family: var(--latin); font-size: 23px; font-variant-numeric: lining-nums tabular-nums; }
+.editorial-layout p, .story-body > p { font-size: 14px; line-height: 2.25; letter-spacing: .025em; }
+.editorial-layout h2 { font-size: 25px; line-height: 1.7; letter-spacing: .045em; }
+.journal-card h2 { font-size: 23px; line-height: 1.8; letter-spacing: .025em; }
+.menu-tabs { font-family: var(--sans); font-size: 11px; letter-spacing: .08em; }
+.navigation-dialog nav a { font-family: var(--latin); font-size: 31px; letter-spacing: 0; }
+.navigation-dialog nav small { font-family: var(--sans); font-size: 10px; letter-spacing: .025em; }
+.navigation-dialog nav a > span, .dialog-note { font-family: var(--sans); }
+.info-dialog h2 { font-size: 29px; letter-spacing: .05em; }
+.info-dialog p:not(.eyebrow) { font-size: 13px; letter-spacing: .015em; }
+@media (min-width: 901px) and (max-width: 1200px) {
+  .brand { font-size: 25px; }
+  .header-reserve { font-size: 16px; }
+  .hero h1 { font-size: clamp(24px, 2.64vw, 27px); letter-spacing: .045em; }
+  .concept-copy h2, .menu-copy h2, .space-copy h2 { font-size: 30px; letter-spacing: .025em; }
+  .menu-copy > p:not(.eyebrow) { font-size: 11px; }
+  .menu-preview dd { font-size: 15px; }
+  .menu-preview dt a { font-size: 9px; }
+  .menu-preview dt small { font-size: 9px; letter-spacing: 0; }
+}
+@media (max-width: 900px) {
+  .brand { font-size: 23px; }
+  .home-header > .brand, .site-header > .brand { padding-top: 24px; }
+  .header-reserve { font-size: 15px; }
+  .hero h1 { font-size: 32px; letter-spacing: .06em; line-height: 1.72; }
+  .hero-lead { font-size: 13px; letter-spacing: .035em; }
+  .hero-caption { font-size: 14px; letter-spacing: .045em; }
+  .concept-copy h2, .menu-copy h2, .space-copy h2 { font-size: 33px; letter-spacing: .04em; line-height: 1.6; }
+  .concept-copy > p:not(.eyebrow), .menu-copy > p:not(.eyebrow), .space-copy > p:not(.eyebrow) { font-size: 12px; line-height: 2.15; letter-spacing: .02em; }
+  .visual-brand { font-size: 40px; }
+  .concept-visual-copy { font-size: 13px; letter-spacing: .035em; }
+  .menu-preview dd, .menu-preview > div:last-child dd { font-size: 16px; }
+  .menu-preview dt small { font-size: 9px; letter-spacing: 0; }
+  .reservation-copy h2 { font-size: 29px; line-height: 1.75; letter-spacing: .035em; }
+  .reservation-action .outline-button { font-size: 12px; }
+  .footer-brand { font-size: 22px; }
+  .page-title h1 { font-size: 29px; }
+  .page-title > p:last-child { font-size: 13px; }
+  .navigation-dialog nav a { font-size: 29px; }
+  .info-dialog h2 { font-size: 25px; }
+}
+@media (max-width: 360px) {
+  .brand { font-size: 21px; }
+  .header-reserve { font-size: 14px; }
+  .hero h1 { font-size: 29px; }
+  .menu-copy h2, .concept-copy h2, .space-copy h2 { font-size: 29px; letter-spacing: .025em; }
+  .menu-preview dd, .menu-preview > div:last-child dd { font-size: 15px; }
+}
