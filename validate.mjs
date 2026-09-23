@@ -19,9 +19,15 @@ for(const file of files){
  let level=0;$('main h1,main h2,main h3,main h4,main h5,main h6').each((_,e)=>{const current=Number(e.tagName[1]);assert(current<=level+1,`${file}: heading order`);assert($(e).text().trim());level=current;});
  $('img').each((_,e)=>{assert($(e).attr('alt')!==undefined);assert($(e).attr('width'));assert($(e).attr('height'));});
  $('[data-dialog]').each((_,e)=>assert($(`[id="${$(e).attr('data-dialog')}"]`).length));
+ const consultation=$('a.web-consultation');
+ assert.equal(consultation.length,1,`${file}: one studio consultation link`);
+ assert.equal(consultation.attr('href'),'https://lin.ee/QeJVRgH');
+ assert.equal(consultation.find('.web-consultation-label').text(),'Web制作を相談する');
+ assert.equal(consultation.attr('target'),'_blank');
+ assert(consultation.attr('rel').split(/\s+/).includes('noopener'));
 }
 for(const [file,$]of docs){for(const e of $('[href],[src]').toArray()){
- const ref=$(e).attr('href')||$(e).attr('src');if(/^https?:/.test(ref)){assert($(e).is('link[rel=canonical]'));continue;}
+ const ref=$(e).attr('href')||$(e).attr('src');if(/^https?:/.test(ref)){assert($(e).is('link[rel=canonical]')||($(e).is('a.web-consultation')&&ref==='https://lin.ee/QeJVRgH'));continue;}
  const url=new URL(ref,'https://site.invalid/'+file);let target=url.pathname.slice(1);if(!target||target.endsWith('/'))target+='index.html';
  await fs.access(path.join(out,target));if(url.hash)assert(docs.get(target)?.(`[id="${decodeURIComponent(url.hash.slice(1))}"]`).length,`${file} → ${ref}`);links++;
 }}
