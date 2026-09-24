@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {load} from 'cheerio';
 import {fileURLToPath} from 'node:url';
 import {verifyOgp} from './verify-ogp.mjs';
+import {measurementId, tagUrl} from './analytics.mjs';
 const root=path.dirname(fileURLToPath(import.meta.url)),out=path.join(root,'dist');
 const files=(await fs.readdir(out)).filter(f=>f.endsWith('.html')&&f!=='404.html');
 const docs=new Map();let links=0;
@@ -27,9 +28,18 @@ for(const file of files){
  assert(consultation.attr('rel').split(/\s+/).includes('noopener'));
 }
 for(const [file,$]of docs){for(const e of $('[href],[src]').toArray()){
- const ref=$(e).attr('href')||$(e).attr('src');if(/^https?:/.test(ref)){assert($(e).is('link[rel=canonical]')||($(e).is('a.web-consultation')&&ref==='https://lin.ee/QeJVRgH'));continue;}
+ const ref=$(e).attr('href')||$(e).attr('src');if(/^https?:/.test(ref)){assert($(e).is('link[rel=canonical]')||($(e).is('a.web-consultation')&&ref==='https://lin.ee/QeJVRgH')||($(e).is('script[async]')&&ref===tagUrl));continue;}
  const url=new URL(ref,'https://site.invalid/'+file);let target=url.pathname.slice(1);if(!target||target.endsWith('/'))target+='index.html';
  await fs.access(path.join(out,target));if(url.hash)assert(docs.get(target)?.(`[id="${decodeURIComponent(url.hash.slice(1))}"]`).length,`${file} → ${ref}`);links++;
 }}
 await verifyOgp();
+for(const file of [...files,'404.html']){
+ const $=load(await fs.readFile(path.join(out,file),'utf8'));
+ const tags=$('head script[src*="googletagmanager.com/gtag/js"]');
+ assert.equal(tags.length,1,`${file}: exactly one Google tag`);
+ assert.equal(tags.attr('src'),tagUrl);assert(tags.is('[async]'));
+ const configuration=$('head script:not([src])').toArray().filter(e=>$(e).text().includes(`gtag('config', '${measurementId}')`));
+ assert.equal(configuration.length,1,`${file}: exactly one GA4 configuration`);
+}
+console.log(`PASS: GA4 ${measurementId} on all 10 pages, including 404.`);
 assert.equal(files.length,9);console.log(`PASS: 9 HTML pages, ${links} internal links/assets, heading order, metadata, screenshot OGP hash, noindex policy.`);

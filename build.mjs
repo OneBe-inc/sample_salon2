@@ -3,6 +3,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {stories, menu} from './content.mjs';
 import {siteUrl, socialMetadata} from './social.mjs';
+import {analyticsTag} from './analytics.mjs';
 const root = path.dirname(fileURLToPath(import.meta.url)), out = path.join(root, 'dist');
 await fs.mkdir(path.join(out, 'assets'), {recursive: true});
 const esc = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
@@ -45,3 +46,8 @@ for(const file of await fs.readdir(path.join(root,'assets'))) if(/\.(webp|woff2|
 await fs.writeFile(path.join(out,'.nojekyll'),'');
 await fs.writeFile(path.join(out,'404.html'),`<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>ページが見つかりません｜OneBe salon</title></head><body style="background:#f5f2ec;color:#172338;font-family:serif;padding:12vw"><p>OneBe salon</p><h1>ページが見つかりません。</h1><p>URLをご確認いただくか、トップページへお戻りください。</p><a href="/sample_salon2/">トップページへ</a></body></html>`);
 console.log(`Built ${pages.length} pages + 404. Existing noindex policy preserved.`);
+for (const name of [...pages.map(([name])=>name), '404']) {
+ const file=path.join(out,`${name}.html`);
+ const document=await fs.readFile(file,'utf8');
+ await fs.writeFile(file,document.replace('<head>',`<head>${analyticsTag}`));
+}

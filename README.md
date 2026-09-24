@@ -11,7 +11,8 @@
 - 予約はサンプル案内を表示します。実予約、個人情報の送信、商品販売は行いません。
 - 「Web制作を相談する」はOne BeのLINE（https://lin.ee/QeJVRgH）を新しいタブで開きます。通常9ページに表示し、PCでは画面右端、スマートフォンでは右下に追従。メニュー・予約案内の表示中は隠れます。
 - 元サイトの `noindex,nofollow` を維持。実店舗の住所、電話、営業時間は追加していません。
-- フォント・画像は自サイト配信。外部のフォント配信、解析・広告スクリプトには依存しません。
+- フォント・画像は自サイト配信。アクセス解析にはGA4（DEMO_salon1、測定ID: `G-6QQ7DF747M`）を使用します。
+- GA4のGoogleタグを通常9ページと404に各1つ設置。拡張計測でページビュー、スクロール、外部リンククリックを計測します。LINEのクリックは `click` イベント（`link_url=https://lin.ee/QeJVRgH`）として確認できます。
 
 ## 開発・検証
 
@@ -32,7 +33,7 @@ npm start
 
 文章追加時は `npm run build` → `node prepare-fonts.mjs` → `npm run build` で使用文字のサブセットを再生成します。`prepare-fonts.mjs` の実行時のみGoogle Fontsへの接続が必要です。
 
-`npm run check` はHTMLパーサーで見出し・リンク・メタ情報・画像・OGPスクリーンショットのハッシュとnoindexを検証します。公開後は以下で全ページのHTML一致とOGPを検証できます。
+`npm run check` はHTMLパーサーで見出し・リンク・メタ情報・画像・OGPスクリーンショットのハッシュとnoindex、GA4タグの測定IDと重複がないことを検証します。GA4の設定は `analytics.mjs` で管理します。公開後は以下で全ページのHTML一致とOGPを検証できます。
 
 ```sh
 node verify-ogp.mjs --live
